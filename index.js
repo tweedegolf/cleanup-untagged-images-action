@@ -29,7 +29,7 @@ async function run() {
       }
 
       // check that images are not too close to tagged images
-      if (untaggedTsTolerance < 0) {
+      if (untaggedTsTolerance <= 0) {
         return true;
       } else {
         return !taggedImages.some(t => Math.abs((new Date(t.created_at)).getTime() - pCreated.getTime()) < untaggedTsTolerance);
