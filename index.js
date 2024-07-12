@@ -20,6 +20,11 @@ async function run() {
   });
   const taggedImages = containerImages.filter(p => (p.metadata?.container?.tags ?? []).length > 0);
   const untaggedItems = containerImages.filter(p => {
+      // check the item is untagged
+      if ((p.metadata?.container?.tags ?? []).length > 0) {
+        return false;
+      }
+
       // check that images are old enough
       const pCreated = new Date(p.created_at);
       if (olderThan > 0) {
@@ -31,9 +36,9 @@ async function run() {
       // check that images are not too close to tagged images
       if (untaggedTsTolerance <= 0) {
         return true;
-      } else {
-        return !taggedImages.some(t => Math.abs((new Date(t.created_at)).getTime() - pCreated.getTime()) < untaggedTsTolerance);
       }
+
+      return !taggedImages.some(t => Math.abs((new Date(t.created_at)).getTime() - pCreated.getTime()) < untaggedTsTolerance);
   });
 
   console.log(`Found ${untaggedItems.length} untagged images no longer necessary`);
