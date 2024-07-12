@@ -1,0 +1,23 @@
+{
+  "name": "cleanup-untagged-images-action",
+  "version": "1.0.0",
+  "description": "The GitHub container registry does not automatically remove old tags or untagged images from itself. To do this, we can setup an actions workflow that does this for us automatically. There are two steps to this process. First, we remove any tags that are no longer needed by adding any number of jobs refering to the `cleanup-images-action` step. Finally we finish by adding a single `cleanup-untagged-images-action` step. Of course, if your image creation workflow never creates any new tags but instead always reuses the existing ones there is no need to include any of the tag cleanup workflows. Let's look at an example:",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/tweedegolf/cleanup-untagged-images-action.git"
+  },
+  "author": "Marlon Baeten <marlon@tweedegolf.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/tweedegolf/cleanup-untagged-images-action/issues"
+  },
+  "homepage": "https://github.com/tweedegolf/cleanup-untagged-images-action#readme",
+  "dependencies": {
+    "@actions/core": "^1.10.1",
+    "@actions/github": "^6.0.0"
+  }
+}

@@ -1,0 +1,23 @@
+name: Cleanup images
+inputs:
+  package:
+    description: "Name of the container registry package"
+    required: true
+    type: string
+  older_than:
+    description: "Only remove untagged container images at least as old as this (in days)"
+    required: false
+    default: -1
+    type: number
+  untagged_timestamp_tolerance:
+    description: "Do not remove untagged container images if they have a created timestamp this close (in milliseconds) to a tagged container image"
+    required: false
+    default: 10000
+    type: number
+  token:
+    required: false
+    type: string
+    default: ${{ github.token }}
+runs:
+  using: 'node20'
+  main: 'index.js'
