@@ -19,5 +19,5 @@ inputs:
     type: string
     default: ${{ github.token }}
 runs:
-  using: 'node20'
-  main: 'index.js'
+  using: 'node24'
+  main: 'dist/index.js'

@@ -1,10 +1,10 @@
-const core = require('@actions/core');
-const github = require('@actions/github');
+import * as core from '@actions/core';
+import * as github from '@actions/github';
 
 async function run() {
   const packageName = core.getInput('package');
-  const olderThan = core.getInput('older_than');
-  const untaggedTsTolerance = core.getInput('untagged_timestamp_tolerance');
+  const olderThan = Number(core.getInput('older_than'));
+  const untaggedTsTolerance = Number(core.getInput('untagged_timestamp_tolerance'));
   const owner = github.context.repo.owner;
   const token = core.getInput('token');
 
@@ -41,7 +41,7 @@ async function run() {
       return !taggedImages.some(t => Math.abs((new Date(t.created_at)).getTime() - pCreated.getTime()) < untaggedTsTolerance);
   });
 
-  console.log(`Found ${untaggedItems.length} untagged images no longer necessary`);
+  core.info(`Found ${untaggedItems.length} untagged images no longer necessary`);
   for (const untagged of untaggedItems) {
       await octokit.rest.packages.deletePackageVersionForOrg({
           package_type: 'container',
@@ -49,7 +49,7 @@ async function run() {
           org: owner,
           package_version_id: untagged.id,
       });
-      console.log(`Deleted untagged container image '${untagged.name}'`);
+      core.info(`Deleted untagged container image '${untagged.name}'`);
   }
 }
 

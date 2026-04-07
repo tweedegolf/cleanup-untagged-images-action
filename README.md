@@ -42,6 +42,17 @@ action is only run on a schedule once a week, there is no need to run it after
 every main branch update or every pull request unless lots of container builds
 are happening on your repository.
 
+### Development
+
+After updating dependencies, rebuild the bundle and commit the result:
+
+```sh
+npm install
+npm run build
+git add package.json package-lock.json dist/index.js
+git commit -m "Update dependencies"
+```
+
 ### Step inputs
 This step has several parameters that allow customizing the behavior:
 
